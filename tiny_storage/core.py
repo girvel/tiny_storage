@@ -1,5 +1,5 @@
 import yaml
-from .internals import pull, push, get_storage_path
+from .internals import pull, push, get_storage_path, put
 
 
 class Storage:
@@ -30,10 +30,19 @@ class Entry:
             with open(path, 'w') as f:
                 yaml.safe_dump(data, f)
 
-        return result
+        return was_modified, result
 
     def pull(self, value=None):
-        return self._act(pull, value)
+        return self._act(pull, value)[1]
 
     def push(self, value=True):
-        return self._act(push, value)
+        return self._act(push, value)[1]
+
+    def put(self, value=True):
+        return self._act(put, value)[1]
+
+    def try_push(self, value=True):
+        return self._act(push, value)[0]
+
+    def try_put(self, value=True):
+        return self._act(put, value)[0]

@@ -32,17 +32,22 @@ def push(data, path, value):
     data[path[0]] = {}
     return push(data[path[0]], path[1:], value)
 
-#
-# def put(data, path, value):
-#     if len(path) == 0:
-#         return False, data
-#
-#     assert isinstance(data, dict), "you can put value only onto dict"
-#
-#     if path[0] in data:
-#         return put(data[path[0]], path[1:], value)
-#
-#     if len(path)
+
+def put(data, path, value):
+    if len(path) == 0:
+        return False, data
+
+    assert isinstance(data, dict), "you can put value only onto dict"
+
+    if path[0] in data:
+        return put(data[path[0]], path[1:], value)
+
+    if len(path) == 1:
+        data[path[0]] = value
+        return True, value
+
+    data[path[0]] = {}
+    return put(data[path[0]], path[1:], value)
 
 
 def get_storage_path(name):
