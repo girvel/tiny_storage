@@ -3,21 +3,13 @@ name: Test & publish 📦 to PyPI
 on:
   push:
     branches: [master]
+    
 
 jobs:
   test:
-    name: Launch integration tests
-    runs-on: ubuntu-latest
-    steps:
-
-    - uses: actions/checkout@v2
-
-    - name: Launch unit tests
-      run: python -m unittest discover -s tests
-
-    - name: Launch integration tests
-      run: python -m unittest discover -s integration_tests
-
+    name: Launch tests
+    uses: girvel/tiny_storage/.github/workflows/test.yaml
+  
 
   publish:
     name: Publish 📦 to PyPI
