@@ -3,7 +3,7 @@ import unittest
 from tiny_storage.internals import pull, push
 
 
-class InternalsTests(unittest.TestCase):
+class InternalsCase(unittest.TestCase):
     def test_pull(self):
         self.assertEqual(
             (False, 3),

@@ -4,7 +4,7 @@ from pathlib import Path
 
 def pull(data, path, value):
     if data is None:  # FIXME value should go instead of undefined value, not None
-        return value
+        return False, value
 
     if len(path) == 0:
         return False, data
