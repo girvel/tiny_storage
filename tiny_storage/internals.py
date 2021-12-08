@@ -15,9 +15,6 @@ def pull(data, path, value):
 
 
 def push(data, path, value):
-    if len(path) == 0:
-        return False, data
-
     assert isinstance(data, dict), "you can push value only into dict"
 
     if len(path) == 1:
