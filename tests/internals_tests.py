@@ -1,6 +1,6 @@
 import unittest
 
-from tiny_storage.internals import pull
+from tiny_storage.internals import pull, push
 
 
 class InternalsTests(unittest.TestCase):
@@ -13,6 +13,13 @@ class InternalsTests(unittest.TestCase):
                 None
             )
         )
+
+    def test_push(self):
+        data = {'a': {}}
+        result = push(data, ['a', 'b', 'c'], 4)
+
+        self.assertEqual(4, result)
+        self.assertEqual({'a': {'b': {'c': 4}}}, data)
 
 
 if __name__ == '__main__':

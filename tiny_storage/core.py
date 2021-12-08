@@ -1,5 +1,5 @@
 import yaml
-from .internals import pull, get_storage_path
+from .internals import pull, push, get_storage_path
 
 
 class Storage:
@@ -25,3 +25,19 @@ class Entry:
             data = yaml.safe_load(f)
 
         return pull(data, self.key.split('.'), value)
+
+    def push(self, value=True):
+        path = get_storage_path(self.name)
+
+        if not path.exists():
+            return value
+
+        with open(path, 'r') as f:
+            data = yaml.safe_load(f)
+
+        result = push(data, self.key.split('.'), value)
+
+        with open(path, 'w') as f:
+            yaml.safe_dump(data, f)
+
+        return result
