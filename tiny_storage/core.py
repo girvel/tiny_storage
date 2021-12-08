@@ -15,29 +15,25 @@ class Entry:
         self.name = name
         self.key = key
 
-    def pull(self, value=None):
+    def _act(self, function, value):
         path = get_storage_path(self.name)
 
-        if not path.exists():
-            return value
+        if path.exists():
+            with open(path, 'r') as f:
+                data = yaml.safe_load(f)
+        else:
+            data = {}
 
-        with open(path, 'r') as f:
-            data = yaml.safe_load(f)
+        was_modified, result = function(data, self.key.split('.'), value)
 
-        return pull(data, self.key.split('.'), value)
-
-    def push(self, value=True):
-        path = get_storage_path(self.name)
-
-        if not path.exists():
-            return value
-
-        with open(path, 'r') as f:
-            data = yaml.safe_load(f)
-
-        result = push(data, self.key.split('.'), value)
-
-        with open(path, 'w') as f:
-            yaml.safe_dump(data, f)
+        if was_modified:
+            with open(path, 'w') as f:
+                yaml.safe_dump(data, f)
 
         return result
+
+    def pull(self, value=None):
+        return self._act(pull, value)
+
+    def push(self, value=True):
+        return self._act(push, value)
