@@ -6,11 +6,11 @@ from tiny_storage.internals import pull, push
 class InternalsCase(unittest.TestCase):
     def test_pull(self):
         self.assertEqual(
-            (False, 3),
+            (False, None),
             pull(
-                {'a': {'something': 3}, 'b': 4, 'c': [1, 2, 3]},
+                {'a': {'something': None}, 'b': 4, 'c': [1, 2, 3]},
                 ['a', 'something'],
-                None
+                123
             )
         )
 
