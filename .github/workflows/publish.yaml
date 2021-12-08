@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Launch tests
-    uses: girvel/tiny_storage/.github/workflows/test.yaml
+    uses: girvel/tiny_storage/.github/workflows/test.yaml@master
   
 
   publish:
