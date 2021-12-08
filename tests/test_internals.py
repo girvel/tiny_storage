@@ -21,6 +21,13 @@ class InternalsCase(unittest.TestCase):
         self.assertEqual((True, 4), result)
         self.assertEqual({'a': {'b': {'c': 4}}}, data)
 
+    def test_push_force(self):
+        data = {'a': {'b': {'c': 3}}}
+        result = push(data, ['a', 'b', 'c'], 4)
+
+        self.assertEqual((True, 4), result)
+        self.assertEqual({'a': {'b': {'c': 4}}}, data)
+
 
 if __name__ == '__main__':
     unittest.main()
