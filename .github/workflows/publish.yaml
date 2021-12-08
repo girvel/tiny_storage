@@ -1,29 +1,38 @@
-name: Test & publish 📦 to PyPI
+name: Publish 📦 to PyPI
 
 on:
   push:
     branches: [master]
+    
 
 jobs:
   test:
-    name: Launch integration tests
-    uses: girvel/tiny_storage/.github/workflows/test.yml@master
+    name: Launch tests
+    uses: girvel/tiny_storage/.github/workflows/test.yaml@master
+  
+
   publish:
     name: Publish 📦 to PyPI
     needs: test
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@master
+
     - name: Set up Python 3.9
       uses: actions/setup-python@v1
       with:
         python-version: 3.9
+
     - name: Install pypa/build
       run: python -m pip install build --user
+
     - name: Increment current version
       run: sed -E 's/(.*build = )([0-9]+)/echo "\1$((\2+1))"/e' -i tiny_storage/_version.py
+
     - name: Build a binary wheel and a source tarball
       run: python -m build --sdist --wheel --outdir dist/
+
     - name: Publish 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:
