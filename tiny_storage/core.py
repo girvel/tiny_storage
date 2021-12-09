@@ -20,7 +20,7 @@ class Entry:
 
         if path.exists():
             with open(path, 'r') as f:
-                data = yaml.safe_load(f)
+                data = yaml.safe_load(f) or {}
         else:
             data = {}
 
