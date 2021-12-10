@@ -1,20 +1,27 @@
+#!/usr/bin/env python
+
 import re
+
+
+def printed(x):
+  print(x)
+  return x
 
 
 if __name__ == '__main__':
     def increment_init(match):
-        return "__version__ = '{}.{}.{}'".format(
+        return printed("__version__ = '{}.{}.{}'".format(
             match.group(1),
             match.group(2),
             int(match.group(3)) + 1,
-        )
+        ))
 
     def increment_setup(match):
-        return "version='{}.{}.{}'".format(
+        return printed("version='{}.{}.{}'".format(
             match.group(1),
             match.group(2),
             int(match.group(3)) + 1,
-        )
+        ))
 
     for file, pattern, function in (
         ('tiny_storage/__init__.py',

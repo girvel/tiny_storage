@@ -27,9 +27,6 @@ jobs:
     - name: Install pypa/build
       run: python -m pip install build --user
 
-    - name: Increment current version
-      run: python .github/toolkit/increment_version.py
-
     - name: Build a binary wheel and a source tarball
       run: python -m build --sdist --wheel --outdir dist/
 
