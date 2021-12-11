@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 import yaml
@@ -7,30 +8,40 @@ from tiny_storage import Storage
 import unittest
 
 
-class TinyStorageCase(unittest.TestCase):
+def get_storage_path(name):
+    if sys.platform.startswith('linux'):
+        return os.getenv('HOME') / Path(f".{name}.yaml")
+
+    if sys.platform.startswith('win'):
+        return os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
+
+    raise Exception(f"Platform {sys.platform} is not supported.")
+
+
+class DataFileExistsCase(unittest.TestCase):
     def setUp(self):
         self.storage = Storage('test')
+        path = get_storage_path('test')
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('something: 1')
 
     def tearDown(self):
-        os.remove(os.getenv('HOME') / Path('.test.yaml'))
+        os.remove(get_storage_path('test'))
 
     def test_pull(self):
-        os.system(r'echo "something: 1" > ~/.test.yaml')
         self.assertEqual(self.storage('something').pull(), 1)
         self.assertEqual(self.storage('another_thing').pull(), None)
 
     def test_push(self):
-        os.system(r'echo "something: 1" > ~/.test.yaml')
         self.assertEqual(self.storage('something').push(), True)
         self.assertEqual(self.storage('another_thing').push(), True)
 
-        with open(os.getenv('HOME') / Path('.test.yaml')) as f:
+        with open(get_storage_path('test')) as f:
             self.assertEqual(dict(something=True, another_thing=True), yaml.safe_load(f))
 
     def test_put(self):
-        os.system(r'echo "something: 1" > ~/.test.yaml')
         self.assertEqual(self.storage('something').put(), 1)
         self.assertEqual(self.storage('another_thing').put(), True)
 
-        with open(os.getenv('HOME') / Path('.test.yaml')) as f:
+        with open(get_storage_path('test')) as f:
             self.assertEqual(dict(something=1, another_thing=True), yaml.safe_load(f))
