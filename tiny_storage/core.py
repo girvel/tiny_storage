@@ -27,6 +27,9 @@ class Entry:
         was_modified, result = function(data, self.key.split('.'), value)
 
         if was_modified:
+            if not path.parent.exists():
+                path.parent.mkdir(parents=True)
+                
             with open(path, 'w') as f:
                 yaml.safe_dump(data, f)
 
