@@ -22,7 +22,7 @@ class DataFileExistsCase(unittest.TestCase):
     def setUp(self):
         self.storage = Storage('test')
         path = get_storage_path('test')
-        path.parent.mkdir(True, True)
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text('something: 1')
 
     def tearDown(self):
