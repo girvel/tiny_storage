@@ -13,7 +13,7 @@ def get_storage_path(name):
         return os.getenv('HOME') / Path(f".{name}.yaml")
 
     if sys.platform.startswith('win'):
-        return os.getenv('APPDATA') / Path(f"{name}/{name.yaml}")
+        return os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
 
     raise Exception(f"Platform {sys.platform} is not supported.")
 
@@ -23,7 +23,7 @@ class TinyStorageCase(unittest.TestCase):
         self.storage = Storage('test')
 
     def tearDown(self):
-        os.remove(os.getenv('HOME') / Path('.test.yaml'))
+        os.remove(get_storage_path('test'))
 
     def test_pull(self):
         os.system(r'echo "something: 1" > ~/.test.yaml')

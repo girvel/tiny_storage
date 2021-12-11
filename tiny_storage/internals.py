@@ -53,6 +53,6 @@ def get_storage_path(name):
         return os.getenv('HOME') / Path(f".{name}.yaml")
 
     if sys.platform.startswith('win'):
-        return os.getenv('APPDATA') / Path(f"{name}/{name.yaml}")
+        return os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
 
     raise Exception(f"Platform {sys.platform} is not supported.")
