@@ -20,6 +20,9 @@ jobs:
       with:
         python-version: 3.9
 
+    - name: Install requirements.txt
+      run: pip install -r requirements.txt
+
     - name: Launch unit tests
       run: python -m unittest discover -s tests
 
