@@ -1,8 +1,3 @@
-import os
-import sys
-from pathlib import Path
-
-
 def pull(data, path, value):
     if len(path) == 0:
         return False, data
@@ -46,13 +41,3 @@ def put(data, path, value):
 
     data[path[0]] = {}
     return put(data[path[0]], path[1:], value)
-
-
-def get_storage_path(name):
-    if sys.platform.startswith('linux'):
-        return os.getenv('HOME') / Path(f".{name}.yaml")
-
-    if sys.platform.startswith('win'):
-        return os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
-
-    raise Exception(f"Platform {sys.platform} is not supported.")
