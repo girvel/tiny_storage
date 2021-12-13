@@ -37,11 +37,17 @@ class DataFileExistsCase(unittest.TestCase):
         self.assertEqual(self.storage('another_thing').push(), True)
 
         with open(get_storage_path('test')) as f:
-            self.assertEqual(dict(something=True, another_thing=True), yaml.safe_load(f))
+            self.assertEqual(
+                dict(something=True, another_thing=True),
+                yaml.safe_load(f)
+            )
 
     def test_put(self):
         self.assertEqual(self.storage('something').put(), 1)
         self.assertEqual(self.storage('another_thing').put(), True)
 
         with open(get_storage_path('test')) as f:
-            self.assertEqual(dict(something=1, another_thing=True), yaml.safe_load(f))
+            self.assertEqual(
+                dict(something=1, another_thing=True),
+                yaml.safe_load(f)
+            )

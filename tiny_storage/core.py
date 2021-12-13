@@ -16,7 +16,7 @@ class Type:
         global_data = lambda name: Path(f"/var/lib/{name}.yaml")
         global_config = lambda name: Path(f"/etc/{name}.yaml")
 
-    elif sys.platform.startswith('windows'):
+    elif sys.platform.startswith('win'):
         user = lambda name: os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
         user_config = \
             lambda name: os.getenv('APPDATA') / Path(f"{name}/config.yaml")

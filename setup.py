@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="tiny_storage",
-    version='1.0.19',
+    version='1.0.20',
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
     description=
