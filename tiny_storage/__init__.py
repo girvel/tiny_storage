@@ -1,4 +1,4 @@
-from .core import Storage, Entry
+from .core import Storage, Type
 
-__all__ = [e.__name__ for e in (Storage, Entry)]
-__version__ = '1.0.18'
+__all__ = [e.__name__ for e in (Storage, Type)]
+__version__ = '1.0.19'

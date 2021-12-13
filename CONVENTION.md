@@ -4,13 +4,13 @@ This table describes where application data of different types are placed. Names
 
 ## Already realized
 
-| Data type            | Windows                                  | Linux                           |
-|----------------------|------------------------------------------|---------------------------------|
-| `type.local`         | `{name}.yaml`                            | `{name}.yaml`                   |
-| `type.user`          | `%APPDATA%/{name}/{name}.yaml`           | `$HOME/.{name}.yaml`            |
-| `type.user_config `  | `%APPDATA%/{name}/{name}.yaml`           | `$HOME/.config/.{name}.yaml`    |
-| `type.global`        | `%PROGRAMDATA%/{name}/data.yaml`         | `/var/lib/{name}.yaml`          |
-| `type.global_config` | `%PROGRAMDATA%/{name}/config.yaml`       | `/etc/{name}.yaml`              |
+| Data type            | Windows                            | Linux                          |
+|----------------------|------------------------------------|--------------------------------|
+| `Type.local`         | `{name}.yaml`                      | `{name}.yaml`                  |
+| `Type.user_data`     | `%APPDATA%/{name}/{name}.yaml`     | `$HOME/.{name}.yaml`           |
+| `Type.user_config `  | `%APPDATA%/{name}/config.yaml`     | `$HOME/.config/{name}.yaml`    |
+| `Type.global_data`   | `%PROGRAMDATA%/{name}/data.yaml`   | `/var/lib/{name}.yaml`         |
+| `Type.global_config` | `%PROGRAMDATA%/{name}/config.yaml` | `/etc/{name}.yaml`             |
  
 ## Maybe later
 
