@@ -20,11 +20,56 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install requirements.txt
-      run: pip install -r requirements.txt
+    - name: Install requirements
+      run: |
+        pip install -r requirements.txt
+        pip install coverage
 
     - name: Launch unit tests
       run: python -m unittest discover -s tests
 
     - name: Launch integration tests
-      run: python -m unittest discover -s integration_tests
+      run: |
+        coverage run --source tiny_storage -m unittest discover -s integration_tests
+        
+    - name: Parse report
+      if: matrix.os == 'ubuntu-20.04'
+      run: |
+        coverage report \
+          | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
+          | tee coverage.txt
+      
+    - name: Upload coverage artifact
+      uses: actions/upload-artifact@v2
+      if: matrix.os == 'ubuntu-20.04'
+      with:
+        name: coverage
+        path: coverage.txt
+        
+  generate-badge:
+    name: Generate coverage badge
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Download coverage artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: coverage
+        
+    - name: Display file structure
+      run: ls -R
+      
+    - name: Get artifact content
+      id: get
+      run: |
+        echo '::set-output name=coverage::'$(cat coverage.txt)
+    
+    - name: Generate a badge
+      uses: RubbaBoy/BYOB@v1.2.1
+      with:
+        NAME: coverage
+        LABEL: 'Test coverage'
+        STATUS: ${{ steps.get.outputs.coverage }}
+        COLOR: blue 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
