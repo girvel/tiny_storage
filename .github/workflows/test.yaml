@@ -68,18 +68,26 @@ jobs:
       run: coverage combine .coverage.*/.coverage
       
     - name: Calculate coverage
-      id: calculate
+      run: coverage report | tee coverage-report
+      
+    - name: Parse report
+      id: parse
       run: |
         echo '::set-output name=coverage::'$( \
-          coverage report \
+          cat coverage-report \
             | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
         )
-        
+    
+    - name: Test GHA outputs
+      run: |
+        echo 'coverage is' ${{ steps.parse.outputs.coverage }} \
+          'and nothing is' ${{ steps.parse.outputs.nothing }}
+    
     - name: Generate a badge
       uses: RubbaBoy/BYOB@v1.2.1
       with:
         NAME: coverage
         LABEL: 'Test coverage'
-        STATUS: ${{ steps.calculate.outputs.coverage }}
+        STATUS: ${{ steps.parse.outputs.coverage }}
         COLOR: blue 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
