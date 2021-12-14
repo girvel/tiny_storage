@@ -69,10 +69,10 @@ jobs:
       
     - name: Calculate coverage
       id: calculate
-      run: >
-        echo '::set-output name=coverage::'$(
-          coverage report 
-            | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p'
+      run: |
+        echo '::set-output name=coverage::'$( \
+          coverage report \
+            | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
         )
         
     - name: Generate a badge
