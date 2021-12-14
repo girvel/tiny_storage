@@ -31,6 +31,10 @@ jobs:
     - name: Launch integration tests
       run: |
         coverage run --source tiny_storage -m unittest discover -s integration_tests
+        
+    - name: Parse report
+      if: matrix.os == 'ubuntu-20.04'
+      run: |
         coverage report \
           | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
           | tee coverage.txt
