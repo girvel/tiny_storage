@@ -26,7 +26,7 @@ class Type:
             lambda name: os.getenv('PROGRAMDATA') / Path(f"{name}/config.yaml")
 
 
-class Storage:
+class Unit:
     def __init__(self, name, type=None):
         self.name = name
         self.type = (type
@@ -38,13 +38,13 @@ class Storage:
 
 
 class Entry:
-    def __init__(self, storage, key):
-        self.storage = storage
+    def __init__(self, unit, key):
+        self.unit = unit
         self.key = key
 
     def _act(self, function, value):
         try:
-            path = self.storage.type(self.storage.name)
+            path = self.unit.type(self.unit.name)
         except KeyError:
             raise Exception(
                 "Platform {} is not supported".format(sys.platform)

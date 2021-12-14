@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from tiny_storage import Storage
+from tiny_storage import Unit
 import unittest
 
 
@@ -20,7 +20,7 @@ def get_storage_path(name):
 
 class DataFileExistsCase(unittest.TestCase):
     def setUp(self):
-        self.storage = Storage('test')
+        self.unit = Unit('test')
         path = get_storage_path('test')
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text('something: 1')
@@ -29,12 +29,12 @@ class DataFileExistsCase(unittest.TestCase):
         os.remove(get_storage_path('test'))
 
     def test_pull(self):
-        self.assertEqual(self.storage('something').pull(), 1)
-        self.assertEqual(self.storage('another_thing').pull(), None)
+        self.assertEqual(self.unit('something').pull(), 1)
+        self.assertEqual(self.unit('another_thing').pull(), None)
 
     def test_push(self):
-        self.assertEqual(self.storage('something').push(), True)
-        self.assertEqual(self.storage('another_thing').push(), True)
+        self.assertEqual(self.unit('something').push(), True)
+        self.assertEqual(self.unit('another_thing').push(), True)
 
         with open(get_storage_path('test')) as f:
             self.assertEqual(
@@ -43,8 +43,8 @@ class DataFileExistsCase(unittest.TestCase):
             )
 
     def test_put(self):
-        self.assertEqual(self.storage('something').put(), 1)
-        self.assertEqual(self.storage('another_thing').put(), True)
+        self.assertEqual(self.unit('something').put(), 1)
+        self.assertEqual(self.unit('another_thing').put(), True)
 
         with open(get_storage_path('test')) as f:
             self.assertEqual(
