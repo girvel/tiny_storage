@@ -63,7 +63,7 @@ jobs:
     - name: Get artifact content
       id: get
       run: |
-        echo '::set-output name=coverage::'$(cat artifact/coverage.txt)
+        echo '::set-output name=coverage::'$(cat coverage.txt)
     
     - name: Generate a badge
       uses: RubbaBoy/BYOB@v1.2.1
