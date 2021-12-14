@@ -35,7 +35,7 @@ jobs:
         path: .coverage
 
     - name: Launch integration tests
-      run: coverage run --source tiny_storage -m unittest discover -s integration_tests
+      run: coverage run --source tiny_storage -m unittest discover -s integration_tests; cat .coverage
       
     - name: Upload coverage artifacts
       uses: actions/upload-artifact@v2
