@@ -26,22 +26,21 @@ jobs:
         pip install coverage
 
     - name: Launch unit tests
-      run: coverage run --source tiny_storage -m unittest discover -s tests
-      
-    - name: Upload coverage
-      uses: actions/upload-artifact@v2
-      with:
-        name: .coverage.unit-${{ matrix.os }}
-        path: .coverage
+      run: python -m unittest discover -s tests
 
     - name: Launch integration tests
-      run: coverage run --source tiny_storage -m unittest discover -s integration_tests; cat .coverage
+      run: |
+        coverage run --source tiny_storage -m unittest discover -s integration_tests
+        coverage report \
+          | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
+          | tee coverage.txt
       
-    - name: Upload coverage artifacts
+    - name: Upload coverage artifact
       uses: actions/upload-artifact@v2
+      if: matrix.os == "ubuntu-20.04"
       with:
-        name: .coverage.integration-${{ matrix.os }}
-        path: .coverage
+        name: coverage
+        path: coverage.txt
         
   generate-badge:
     name: Generate coverage badge
@@ -49,45 +48,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/checkout@v2
-
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.9
-
-    - name: Install requirements
-      run: |
-        pip install -r requirements.txt
-        pip install coverage
-    
     - name: Download coverage artifacts
       uses: actions/download-artifact@v2
-    
-    - name: Combine coverage files
-      run: coverage combine .coverage.*/.coverage
+      with:
+        name: coverage
       
-    - name: Calculate coverage
-      run: coverage report | tee coverage-report
-      
-    - name: Parse report
-      id: parse
+    - name: Get artifact content
+      id: get
       run: |
-        echo '::set-output name=coverage::'$( \
-          cat coverage-report \
-            | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
-        )
-    
-    - name: Test GHA outputs
-      run: |
-        echo 'coverage is' ${{ steps.parse.outputs.coverage }} \
-          'and nothing is' ${{ steps.parse.outputs.nothing }}
+        echo '::set-output name=coverage::'$(cat coverage/coverage.txt)
     
     - name: Generate a badge
       uses: RubbaBoy/BYOB@v1.2.1
       with:
         NAME: coverage
         LABEL: 'Test coverage'
-        STATUS: ${{ steps.parse.outputs.coverage }}
+        STATUS: ${{ steps.get.outputs.coverage }}
         COLOR: blue 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
