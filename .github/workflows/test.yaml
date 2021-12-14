@@ -43,7 +43,6 @@ jobs:
       uses: actions/upload-artifact@v2
       if: matrix.os == 'ubuntu-20.04'
       with:
-        name: coverage
         path: coverage.txt
         
   generate-badge:
@@ -55,12 +54,12 @@ jobs:
     - name: Download coverage artifacts
       uses: actions/download-artifact@v2
       with:
-        name: coverage
+        name: coverage.txt
       
     - name: Get artifact content
       id: get
       run: |
-        echo '::set-output name=coverage::'$(cat coverage/coverage.txt)
+        echo '::set-output name=coverage::'$(cat coverage.txt)
     
     - name: Generate a badge
       uses: RubbaBoy/BYOB@v1.2.1
