@@ -30,7 +30,9 @@ jobs:
 
     - name: Launch integration tests
       run: |
-        coverage run --source tiny_storage -m unittest discover -s integration_tests
+        pip install --user -e .
+        cd integration_tests
+        coverage run --source ../tiny_storage -m unittest discover
         
     - name: Parse report
       if: matrix.os == 'ubuntu-20.04'
