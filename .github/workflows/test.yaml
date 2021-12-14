@@ -45,8 +45,11 @@ jobs:
         
   generate-badge:
     name: Generate coverage badge
+    needs: test
     runs-on: ubuntu-latest
     steps:
+
+    - uses: actions/checkout@v2
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v1
