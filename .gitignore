@@ -1,7 +1,3 @@
-<<<<<<< HEAD
 .idea
 **/__pycache__
-=======
-__pycache
-
->>>>>>> 929adf7f0f08ad0bfd3d5d784e2d12fd1c897238
+.coverage
