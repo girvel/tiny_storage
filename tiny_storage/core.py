@@ -1,3 +1,6 @@
+"""Module implementing all external functionality."""
+
+
 import os
 import sys
 from pathlib import Path
@@ -7,6 +10,8 @@ from .internals import pull, push, put
 
 
 class Type:
+    """Container for storage types."""
+
     local = lambda name: Path(f"{name}.yaml")
 
     if sys.platform.startswith('linux'):
@@ -27,6 +32,8 @@ class Type:
 
 
 class Unit:
+    """Storage unit containing all application data of given type."""
+
     def __init__(self, name, type=None):
         self.name = name
         self.type = (type
