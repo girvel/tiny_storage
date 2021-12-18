@@ -32,7 +32,12 @@ class Type:
 
 
 class Unit:
-    """Storage unit containing all application data of given type."""
+    """Storage unit containing all application data of given type.
+
+    Attributes:
+        name: Name of the application
+        type: Type of data you are storing
+    """
 
     def __init__(self, name, type=None):
         self.name = name
@@ -75,16 +80,68 @@ class Entry:
         return was_modified, result
 
     def pull(self, value=None):
+        """Get the content of the entry or `value`
+
+        Args:
+            value: Default value
+
+        Returns:
+            Content of the entry
+        """
         return self._act(pull, value)[1]
 
     def push(self, value=True):
+        """Set the content of the entry with force.
+
+        Overwrites existing entries and creates intermediate ones
+        if needed.
+
+        Args:
+            value: Value you are pushing
+
+        Returns:
+            `value` argument
+        """
         return self._act(push, value)[1]
 
     def put(self, value=True):
+        """Set the content of the entry without force.
+
+        Does not overwrite existing entries, but can create intermediate
+        ones if needed.
+
+        Args:
+            value: Value you are putting
+
+        Returns:
+            Resulting value of the entry
+        """
         return self._act(put, value)[1]
 
     def try_push(self, value=True):
+        """Set the content of the entry with force.
+
+        Overwrites existing entries and creates intermediate ones
+        if needed.
+
+        Args:
+            value: Value you are pushing
+
+        Returns:
+            Did `value` differ from previous value
+        """
         return self._act(push, value)[0]
 
     def try_put(self, value=True):
+        """Set the content of the entry without force.
+
+        Does not overwrite existing entries, but can create
+        intermediate ones if needed.
+
+        Args:
+            value: Value you are putting
+
+        Returns:
+            True if entry was created, False if entry already existed
+        """
         return self._act(put, value)[0]
