@@ -9,26 +9,28 @@ import yaml
 from .internals import pull, push, put
 
 
+class Error(Exception):
+    pass
+
+
 class Type:
     """Container for storage types."""
 
     local = lambda name: Path(f"{name}.yaml")
 
-    if sys.platform.startswith('linux'):
-        user = lambda name: os.getenv('HOME') / Path(f".{name}.yaml")
-        user_config = \
-            lambda name: os.getenv('HOME') / Path(f".config/{name}.yaml")
+    if sys.platform.startswith("linux"):
+        user = lambda name: os.getenv("HOME") / Path(f".{name}.yaml")
+        user_config = lambda name: os.getenv("HOME") / Path(f".config/{name}.yaml")
         global_data = lambda name: Path(f"/var/lib/{name}.yaml")
         global_config = lambda name: Path(f"/etc/{name}.yaml")
 
-    elif sys.platform.startswith('win'):
-        user = lambda name: os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
-        user_config = \
-            lambda name: os.getenv('APPDATA') / Path(f"{name}/config.yaml")
-        global_data = \
-            lambda name: os.getenv('PROGRAMDATA') / Path(f"{name}/data.yaml")
-        global_config = \
-            lambda name: os.getenv('PROGRAMDATA') / Path(f"{name}/config.yaml")
+    elif sys.platform.startswith("win"):
+        user = lambda name: os.getenv("APPDATA") / Path(f"{name}/{name}.yaml")
+        user_config = lambda name: os.getenv("APPDATA") / Path(f"{name}/config.yaml")
+        global_data = lambda name: os.getenv("PROGRAMDATA") / Path(f"{name}/data.yaml")
+        global_config = lambda name: os.getenv("PROGRAMDATA") / Path(
+            f"{name}/config.yaml"
+        )
 
 
 class Unit:
@@ -41,9 +43,7 @@ class Unit:
 
     def __init__(self, name, type=None):
         self.name = name
-        self.type = (type
-            or hasattr(Type, "user") and Type.user
-            or Type.local)
+        self.type = type or hasattr(Type, "user") and Type.user or Type.local
 
     def __call__(self, key):
         return Entry(self, key)
@@ -55,26 +55,21 @@ class Entry:
         self.key = key
 
     def _act(self, function, value):
-        try:
-            path = self.unit.type(self.unit.name)
-        except KeyError:
-            raise Exception(
-                "Platform {} is not supported".format(sys.platform)
-            )
+        path = self.unit.type(self.unit.name)
 
         if path.exists():
-            with open(path, 'r') as f:
+            with open(path, "r") as f:
                 data = yaml.safe_load(f) or {}
         else:
             data = {}
 
-        was_modified, result = function(data, self.key.split('.'), value)
+        was_modified, result = function(data, self.key.split("."), value)
 
         if was_modified:
             if not path.parent.exists():
                 path.parent.mkdir(parents=True)
 
-            with open(path, 'w') as f:
+            with open(path, "w") as f:
                 yaml.safe_dump(data, f)
 
         return was_modified, result
