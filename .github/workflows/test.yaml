@@ -37,7 +37,8 @@ jobs:
     - name: Parse report
       if: matrix.os == 'ubuntu-20.04'
       run: |
-        coverage report \
+        coverage report | tee report.txt;
+        cat report.txt \
           | sed -n 's/TOTAL[[:space:]]*[[:digit:]]*[[:space:]]*[[:digit:]]*[[:space:]]*// p' \
           | tee coverage.txt
       
