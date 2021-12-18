@@ -1,4 +1,4 @@
-from .core import Unit, Type
+from .core import Unit, Type, SafetyException
 
-__all__ = [e.__name__ for e in (Unit, Type)]
-__version__ = '1.0.32'
+__all__ = [e.__name__ for e in (Unit, Type, SafetyException)]
+__version__ = "1.0.32"
