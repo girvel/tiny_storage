@@ -37,5 +37,3 @@ if __name__ == '__main__':
 
         with open(file, 'w') as f:
             f.write(re.sub(pattern, function, content))
-
-

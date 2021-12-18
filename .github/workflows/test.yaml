@@ -31,8 +31,7 @@ jobs:
     - name: Launch integration tests
       run: |
         pip install --user -e .
-        cd integration_tests
-        coverage run --source ../tiny_storage \
+        coverage run --source tiny_storage \
           -m unittest discover -s integration_tests
         
     - name: Parse report
