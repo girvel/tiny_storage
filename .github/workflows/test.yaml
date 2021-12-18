@@ -66,6 +66,21 @@ jobs:
       id: get
       run: |
         echo '::set-output name=coverage::'$(cat coverage.txt)
+
+    - name: Determine badge color
+      id: color
+      run: |
+        value=$(cat coverage.txt | sed 's/.$//')
+        
+        if (( $value == 100 )); then
+          echo '::set-output name=value::yellow'
+        elif (( $value >= 98 )); then
+          echo '::set-output name=value::green'
+        elif (( $value >= 80 )); then 
+          echo '::set-output name=value::blue'
+        else
+          echo '::set-output name=value::red'
+        fi
     
     - name: Generate a badge
       uses: RubbaBoy/BYOB@v1.2.1
@@ -73,5 +88,5 @@ jobs:
         NAME: coverage
         LABEL: 'Test coverage'
         STATUS: ${{ steps.get.outputs.coverage }}
-        COLOR: blue 
+        COLOR: ${{ steps.color.outputs.value }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
