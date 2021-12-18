@@ -9,45 +9,41 @@ import unittest
 
 
 def get_storage_path(name):
-    if sys.platform.startswith('linux'):
-        return os.getenv('HOME') / Path(f".{name}.yaml")
+    if sys.platform.startswith("linux"):
+        return os.getenv("HOME") / Path(f".{name}.yaml")
 
-    if sys.platform.startswith('win'):
-        return os.getenv('APPDATA') / Path(f"{name}/{name}.yaml")
+    if sys.platform.startswith("win"):
+        return os.getenv("APPDATA") / Path(f"{name}/{name}.yaml")
 
     raise Exception(f"Platform {sys.platform} is not supported.")
 
 
 class DataFileExistsCase(unittest.TestCase):
     def setUp(self):
-        self.unit = Unit('test')
-        path = get_storage_path('test')
+        self.unit = Unit("test")
+        path = get_storage_path("test")
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text('something: 1')
+        path.write_text("something: 1")
 
     def tearDown(self):
-        os.remove(get_storage_path('test'))
+        os.remove(get_storage_path("test"))
 
     def test_pull(self):
-        self.assertEqual(self.unit('something').pull(), 1)
-        self.assertEqual(self.unit('another_thing').pull(), None)
+        self.assertEqual(self.unit("something").pull(), 1)
+        self.assertEqual(self.unit("another_thing").pull(), None)
 
     def test_push(self):
-        self.assertEqual(self.unit('something').push(), True)
-        self.assertEqual(self.unit('another_thing').push(), True)
+        self.assertEqual(self.unit("something").push(), True)
+        self.assertEqual(self.unit("another_thing").push(), True)
 
-        with open(get_storage_path('test')) as f:
+        with open(get_storage_path("test")) as f:
             self.assertEqual(
-                dict(something=True, another_thing=True),
-                yaml.safe_load(f)
+                dict(something=True, another_thing=True), yaml.safe_load(f)
             )
 
     def test_put(self):
-        self.assertEqual(self.unit('something').put(), 1)
-        self.assertEqual(self.unit('another_thing').put(), True)
+        self.assertEqual(self.unit("something").put(), 1)
+        self.assertEqual(self.unit("another_thing").put(), True)
 
-        with open(get_storage_path('test')) as f:
-            self.assertEqual(
-                dict(something=1, another_thing=True),
-                yaml.safe_load(f)
-            )
+        with open(get_storage_path("test")) as f:
+            self.assertEqual(dict(something=1, another_thing=True), yaml.safe_load(f))

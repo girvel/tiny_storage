@@ -2,12 +2,11 @@ import setuptools
 
 setuptools.setup(
     name="tiny_storage",
-    version='1.0.32',
+    version="1.0.32",
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
-    description=
-    "Tiny library for key-value single-file application data storage",
-    long_description=open('README.md', 'r', encoding='utf-8').read(),
+    description="Tiny library for key-value single-file application data storage",
+    long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/girvel/tiny_storage",
     classifiers=[
