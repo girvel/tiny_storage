@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from tiny_storage import Unit
+from tiny_storage import Unit, SafetyException
 import unittest
 
 
@@ -40,6 +40,14 @@ class DataFileExistsCase(unittest.TestCase):
             self.assertEqual(
                 dict(something=True, another_thing=True), yaml.safe_load(f)
             )
+
+    def test_push(self):
+        class UnsafeType:
+            pass
+
+        self.assertRaises(
+            SafetyException, lambda: self.unit("something").push(UnsafeType())
+        )
 
     def test_put(self):
         self.assertEqual(self.unit("something").put(), 1)

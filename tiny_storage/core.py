@@ -9,7 +9,7 @@ import yaml
 from .internals import pull, push, put
 
 
-class Error(Exception):
+class SafetyException(Exception):
     pass
 
 
@@ -70,7 +70,14 @@ class Entry:
                 path.parent.mkdir(parents=True)
 
             with open(path, "w") as f:
-                yaml.safe_dump(data, f)
+                try:
+                    yaml.safe_dump(data, f)
+                except yaml.representer.RepresenterError as ex:
+                    raise SafetyException(
+                        "One of the passed types is not safe to store in your "
+                        "unit. Replace it with primitive type or make it a "
+                        "subclass of yaml.YAMLObject."
+                    ) from ex
 
         return was_modified, result
 
@@ -92,10 +99,13 @@ class Entry:
         if needed.
 
         Args:
-            value: Value you are pushing
+            value: Value you are pushing; should be a of yaml-safe type
 
         Returns:
             `value` argument
+
+        Raises:
+            yaml.representer.RepresenterError
         """
         return self._act(push, value)[1]
 
@@ -106,7 +116,7 @@ class Entry:
         ones if needed.
 
         Args:
-            value: Value you are putting
+            value: Value you are putting; should be a of yaml-safe type
 
         Returns:
             Resulting value of the entry
@@ -120,7 +130,7 @@ class Entry:
         if needed.
 
         Args:
-            value: Value you are pushing
+            value: Value you are pushing; should be a of yaml-safe type
 
         Returns:
             Did `value` differ from previous value
@@ -134,7 +144,7 @@ class Entry:
         intermediate ones if needed.
 
         Args:
-            value: Value you are putting
+            value: Value you are putting; should be a of yaml-safe type
 
         Returns:
             True if entry was created, False if entry already existed
