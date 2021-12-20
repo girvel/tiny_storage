@@ -1,8 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="tiny_storage",
-    version="1.0.32",
+    name="tiny_storage-unstable",
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
     description="Tiny library for key-value single-file application data storage",

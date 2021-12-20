@@ -1,15 +1,15 @@
-name: Publish 📦 to PyPI
+name: Publish 📦 to PyPI as -unstable
 
 on:
-#  push:
-#    branches: [master]
-    
+  push:
+    branches: [master]
+
 
 jobs:
   test:
     name: Launch tests
     uses: girvel/tiny_storage/.github/workflows/test.yaml@master
-  
+
 
   publish:
     name: Publish 📦 to PyPI
