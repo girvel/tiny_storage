@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import setuptools
 
 setuptools.setup(
@@ -6,7 +8,7 @@ setuptools.setup(
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
     description="Tiny library for key-value single-file application data storage",
-    long_description=open("README.md", "r", encoding="utf-8").read(),
+    long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     url="https://github.com/girvel/tiny_storage",
     classifiers=[
@@ -17,4 +19,5 @@ setuptools.setup(
     package_dir={"": "."},
     packages=["tiny_storage"],
     python_requires=">=3.6",
+    install_requires=Path("requirements/normal.txt").read_text().splitlines(),
 )
