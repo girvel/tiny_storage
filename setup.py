@@ -17,5 +17,5 @@ setuptools.setup(
     package_dir={"": "."},
     packages=["tiny_storage"],
     python_requires=">=3.6",
-    install_requires=Path("requirements.txt").read_text().split_lines()
+    install_requires=Path("requirements.txt").read_text().splitlines()
 )
