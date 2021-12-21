@@ -8,7 +8,9 @@ on:
 jobs:
   test:
     name: Launch tests
-    uses: girvel/tiny_storage/.github/workflows/test.yaml@master
+    uses: girvel/python-library-workflow/test.yaml@master
+    with:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   publish:
