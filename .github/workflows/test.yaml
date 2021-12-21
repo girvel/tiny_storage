@@ -8,6 +8,6 @@ on:
 jobs:
   test:
     name: Launch tests
-    uses: girvel/python-library-workflow/test.yaml@master
+    uses: girvel/python-library-workflow/.github/workflows/test.yaml@master
     with:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
