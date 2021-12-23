@@ -1,4 +1,5 @@
 import setuptools
+from pathlib import Path
 
 setuptools.setup(
     name="tiny_storage-unstable",
@@ -16,4 +17,5 @@ setuptools.setup(
     package_dir={"": "."},
     packages=["tiny_storage"],
     python_requires=">=3.6",
+    install_requires=Path("requirements.txt").read_text().splitlines()
 )
