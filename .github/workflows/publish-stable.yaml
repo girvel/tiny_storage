@@ -1,0 +1,15 @@
+name: Publish 📦 to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  main:
+    name: Launch workflow
+    uses: girvel/python-library-workflow/.github/workflows/main.yaml@master
+    with:
+      publish_as: 'release'
+    secrets:
+      REPO_TOKEN: ${{ github.token }}
+      PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
