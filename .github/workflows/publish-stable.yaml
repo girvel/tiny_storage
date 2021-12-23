@@ -6,7 +6,6 @@ on:
 
 jobs:
   main:
-    name: Launch workflow
     uses: girvel/python-library-workflow/.github/workflows/main.yaml@master
     with:
       publish_as: 'release'
