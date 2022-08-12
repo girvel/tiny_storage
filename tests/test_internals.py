@@ -42,6 +42,17 @@ class InternalsCase(unittest.TestCase):
         self.assertEqual((False, 3), result)
         self.assertEqual({"a": {"b": {"c": 3}}}, data)
 
+    def test_put_callable(self):
+        def callback():
+            self.assertFalse(True)
+            return 4
+
+        data = {"a": {"b": {"c": 3}}}
+        result = put(data, ["a", "b", "c"], callback)
+
+        self.assertEqual((False, 3), result)
+        self.assertEqual({"a": {"b": {"c": 3}}}, data)
+
 
 if __name__ == "__main__":
     unittest.main()
