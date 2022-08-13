@@ -46,7 +46,6 @@ def put(data, path, value):
             value = value()
 
         data[path[0]] = value
-        print("return")
         return True, value
 
     data[path[0]] = {}
