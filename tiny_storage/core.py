@@ -43,7 +43,7 @@ class Unit:
 
     def __init__(self, name, type=None):
         self.name = name
-        self.type = type or hasattr(Type, "user") and Type.user or Type.local
+        self.type = type or getattr(Type, "user", Type.local)
 
     def __call__(self, key):
         return Entry(self, key)
