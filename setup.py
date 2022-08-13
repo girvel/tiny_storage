@@ -1,8 +1,7 @@
 import setuptools
-from pathlib import Path
 
 setuptools.setup(
-    name="tiny_storage-unstable",
+    name="tiny_storage",
     version="1.1.0",
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
@@ -18,5 +17,5 @@ setuptools.setup(
     package_dir={"": "."},
     packages=["tiny_storage"],
     python_requires=">=3.6",
-    install_requires=Path("requirements.txt").read_text().splitlines()
+    install_requires=['PyYAML>=5.3.1']
 )
