@@ -43,7 +43,7 @@ class Unit:
 
     def __init__(self, name, type=None):
         self.name = name
-        self.type = type or hasattr(Type, "user") and Type.user or Type.local
+        self.type = type or getattr(Type, "user", Type.local)
 
     def __call__(self, key):
         return Entry(self, key)
@@ -55,11 +55,10 @@ class Entry:
         self.key = key
 
     def _act(self, function, value):
-        path = self.unit.type(self.unit.name)
+        path = Path(self.unit.type(self.unit.name))
 
         if path.exists():
-            with open(path, "r") as f:
-                data = yaml.safe_load(f) or {}
+            data = yaml.safe_load(path.read_text()) or {}
         else:
             data = {}
 
