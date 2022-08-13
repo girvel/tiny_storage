@@ -1,11 +1,9 @@
 import setuptools
 from pathlib import Path
 
-import tiny_storage
-
 setuptools.setup(
     name="tiny_storage-unstable",
-    version=tiny_storage.__version__,
+    version="1.1.0",
     author="Nikita Girvel Dobrynin",
     author_email="widauka@ya.ru",
     description="Tiny library for key-value single-file application data storage",
