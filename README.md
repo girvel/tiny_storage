@@ -37,6 +37,8 @@ pip install tiny_storage
 
 ## 1. Hello world
 
+![](iceberg/1.jpg)
+
 Suppose you want to store a configuration of your application between sessions.
 
 ```python
@@ -53,6 +55,8 @@ The code above will create a YAML configuration file in the appropriate place an
 
 ## 2. Accessing data
 
+![](iceberg/2.jpg)
+
 Syntax for accessing data is the following:
 
 ```python
@@ -67,6 +71,8 @@ config('essential.greeting').push('hi')     # set a greeting as 'hi'
 ```
 
 ## 3. Storing config in different places
+
+![](iceberg/3.jpg)
 
 You can define what type of config do you need and tiny_storage will choose the place according to standard of your OS. For example, to store data in global configuration file you pass `Type.global_config` to your storage unit definition, and it will go to `/etc` in linux and to `%PROGRAM_DATA%` in windows.
 
@@ -93,6 +99,8 @@ config = Unit('application-name', lambda name: Path(f"/root/.{name}.yaml"))
 ```
 
 ## 4. Access methods
+
+![](iceberg/4.jpg)
 
 There are 5 most common cases of configuration data access and they are encapsulated into 5 access methods. 
 
@@ -129,6 +137,8 @@ if config("greeting").try_put("Hello"):
 ```
 
 ## 5. Laziness
+
+![](iceberg/5.jpg)
 
 You can also pass a callable with no arguments as a value and it will be interpreted as a lazy value and be called only if it was used. For example, this hello world program will ask for a greeting only on the first launch:
 
