@@ -7,7 +7,7 @@ This table describes where application data of different types are placed. Names
 | Data type            | Windows                            | Linux                          |
 |----------------------|------------------------------------|--------------------------------|
 | `Type.local`         | `{name}.yaml`                      | `{name}.yaml`                  |
-| `Type.user_data`     | `%APPDATA%/{name}/{name}.yaml`     | `$HOME/.{name}.yaml`           |
+| `Type.user`          | `%APPDATA%/{name}/{name}.yaml`     | `$HOME/.{name}.yaml`           |
 | `Type.user_config `  | `%APPDATA%/{name}/config.yaml`     | `$HOME/.config/{name}.yaml`    |
 | `Type.global_data`   | `%PROGRAMDATA%/{name}/data.yaml`   | `/var/lib/{name}.yaml`         |
 | `Type.global_config` | `%PROGRAMDATA%/{name}/config.yaml` | `/etc/{name}.yaml`             |
